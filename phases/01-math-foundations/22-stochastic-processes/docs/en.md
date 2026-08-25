@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 06-07 (probability, Bayes)
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Simulate 1D and 2D random walks and verify the sqrt(n) scaling of displacement
+- Build a Markov chain simulator and compute its stationary distribution via eigendecomposition
+- Implement Metropolis-Hastings MCMC and Langevin dynamics for sampling from target distributions
+- Connect the forward diffusion process to Brownian motion and explain how the reverse process generates data
+
 ## The Problem
 
 Many AI systems involve randomness that evolves over time. Not static randomness -- structured, sequential randomness where each step depends on what came before.
@@ -84,7 +91,7 @@ P = [[0.7, 0.1, 0.2],    (if sunny: 70% sunny, 10% rainy, 20% cloudy)
 
 Start in any state. After many transitions, the distribution of states converges to the stationary distribution pi, where pi * P = pi. This is the left eigenvector of P with eigenvalue 1.
 
-For the weather chain, the stationary distribution might be [0.53, 0.18, 0.29] -- over the long run, it is sunny 53% of the time regardless of the starting state.
+For the weather chain, the stationary distribution is [0.55, 0.18, 0.27] -- over the long run, it is sunny 55% of the time regardless of the starting state.
 
 ```mermaid
 graph LR
@@ -220,6 +227,10 @@ The chain is guaranteed to converge to p(x) under mild conditions. But convergen
 | Langevin dynamics | Score-based generative models, SGLD |
 | Markov decision process | Reinforcement learning |
 | Metropolis-Hastings | Bayesian inference, posterior sampling |
+
+```figure
+random-walk-diffusion
+```
 
 ## Build It
 

@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 0, Lesson 01
 **Time:** ~20 minutes
 
+## Learning Objectives
+
+- Install VS Code with essential extensions for Python, Jupyter, linting, and remote SSH
+- Configure format-on-save, type checking, and notebook output scrolling for AI workflows
+- Set up Remote SSH to edit and debug code on remote GPU machines as if they were local
+- Evaluate editor alternatives (Cursor, Windsurf, Neovim) and their tradeoffs for AI work
+
 ## The Problem
 
 You'll spend thousands of hours inside your editor writing Python, running notebooks, debugging training loops, and SSH-ing into GPU boxes. A misconfigured editor turns every session into friction: no autocomplete, no type hints, no inline errors, manual formatting, and a clunky terminal workflow.
@@ -24,6 +31,10 @@ graph TD
     L3["3. AI-Specific Settings<br/>Auto-format, type checking, rulers"] --> L2
     L2["2. Extensions<br/>Python, Jupyter, Pylance, GitLens"] --> L1
     L1["1. Base Editor<br/>VS Code — free, extensible, universal"]
+```
+
+```figure
+s0-lsp-roundtrip
 ```
 
 ## Build It
@@ -44,7 +55,7 @@ If `code` is not found on macOS, open VS Code, press `Cmd+Shift+P`, type "Shell 
 
 ### Step 2: Install Essential Extensions
 
-Open the integrated terminal in VS Code (`Ctrl+`` ` or `` Cmd+` ``) and install the extensions that matter for AI work:
+Open the integrated terminal in VS Code (`` Ctrl+` `` on every platform) and install the extensions that matter for AI work:
 
 ```bash
 code --install-extension ms-python.python
@@ -116,8 +127,8 @@ Useful shortcuts:
 | Action | macOS | Linux/Windows |
 |--------|-------|---------------|
 | Toggle terminal | `` Ctrl+` `` | `` Ctrl+` `` |
-| New terminal | `Ctrl+Shift+`` ` | `Ctrl+Shift+`` ` |
-| Split terminal | `Cmd+\` | `Ctrl+\` |
+| New terminal | `` Ctrl+Shift+` `` | `` Ctrl+Shift+` `` |
+| Split terminal | `Cmd+\` | `Ctrl+Shift+5` |
 
 Split terminals are useful: one for running your script, one for monitoring GPU with `nvidia-smi -l 1` or `watch -n 1 nvidia-smi`.
 

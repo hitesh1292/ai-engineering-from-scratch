@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Implement PMFs and PDFs from scratch for Bernoulli, categorical, Poisson, uniform, and normal distributions
+- Compute expected value, variance, and use the Central Limit Theorem to explain why Gaussians dominate
+- Build softmax and log-softmax functions with the numerical stability trick (subtract max logit)
+- Calculate cross-entropy loss from logits and connect it to negative log-likelihood
+
 ## The Problem
 
 A classifier outputs `[0.03, 0.91, 0.06]`. A language model picks the next word from 50,000 candidates. A diffusion model generates images by sampling from learned distributions. All of these are probability in action.
@@ -246,6 +253,10 @@ Sampling means drawing random values from a distribution. In ML:
 - Diffusion models sample noise and progressively denoise
 
 Sampling from arbitrary distributions requires techniques like inverse transform sampling, rejection sampling, or the reparameterization trick (used in VAEs).
+
+```figure
+gaussian-pdf
+```
 
 ## Build It
 

@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Implement the DFT from scratch and verify it against the O(N log N) Cooley-Tukey FFT
+- Interpret frequency coefficients: extract amplitude, phase, and power spectrum from a signal
+- Apply the convolution theorem to perform convolution via FFT multiplication
+- Connect Fourier frequency decomposition to transformer positional encodings and CNN convolution layers
+
 ## The Problem
 
 An audio recording is a sequence of pressure measurements over time. A stock price is a sequence of values over days. An image is a grid of pixel intensities over space. All of these are data in the time domain (or space domain). You see values changing over some index.
@@ -267,6 +274,10 @@ This is why analog-to-digital converters include anti-aliasing filters that remo
 A common misconception: zero-padding a signal before FFT improves frequency resolution. It does not. Zero-padding interpolates between existing frequency bins, giving you a smoother-looking spectrum. But it cannot reveal frequency detail that was not present in the original samples.
 
 True frequency resolution depends only on the observation time T = N / fs. To resolve two frequencies separated by delta_f, you need at least T = 1 / delta_f seconds of data. No amount of zero-padding changes this fundamental limit.
+
+```figure
+fourier-synthesis
+```
 
 ## Build It
 

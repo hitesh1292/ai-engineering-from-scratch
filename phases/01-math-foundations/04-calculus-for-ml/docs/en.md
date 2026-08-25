@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 01-03
 **Time:** ~60 minutes
 
+## Learning Objectives
+
+- Compute numerical and analytical derivatives for common ML functions (x^2, sigmoid, cross-entropy)
+- Implement gradient descent from scratch to minimize a loss function in 1D and 2D
+- Derive the gradient of a linear regression model and train it via manual weight updates
+- Explain the Hessian matrix, Taylor series approximations, and their connection to optimization methods
+
 ## The Problem
 
 You have a neural network with millions of weights. Each weight is a knob. You need to figure out which direction to turn every single knob to make the model slightly less wrong. Calculus gives you that direction.
@@ -381,6 +388,10 @@ Each weight update:
 
 The forward pass computes the prediction and loss. The backward pass computes the gradient of the loss with respect to every weight. Then every weight takes a small step downhill. Repeat for millions of steps. That is deep learning.
 
+```figure
+derivative-tangent
+```
+
 ## Build It
 
 ### Step 1: Numerical derivative from scratch
@@ -613,5 +624,4 @@ You just built gradient descent from scratch. PyTorch automates the gradient com
 ## Further Reading
 
 - [3Blue1Brown: Essence of Calculus](https://www.3blue1brown.com/topics/calculus) - visual intuition for derivatives, integrals, and the chain rule
-- [Andrej Karpathy: Micrograd](https://github.com/karpathy/micrograd) - a tiny autograd engine that implements backpropagation in ~100 lines
 - [Stanford CS231n: Backpropagation](https://cs231n.github.io/optimization-2/) - how gradients flow through neural network layers

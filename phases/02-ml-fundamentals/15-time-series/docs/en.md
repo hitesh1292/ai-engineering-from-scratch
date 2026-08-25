@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 2, Lessons 01-09
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Decompose a time series into trend, seasonality, and residual components and test for stationarity
+- Implement lag features and rolling statistics to convert a time series into a supervised learning problem
+- Build a walk-forward validation framework that prevents future data from leaking into training
+- Explain why random train/test splits are invalid for time series and demonstrate the performance gap versus proper temporal splits
+
 ## The Problem
 
 You have data ordered by time. Daily sales, hourly temperature, per-minute CPU usage, weekly stock prices. You want to predict the next value, the next week, the next quarter.
@@ -226,6 +233,10 @@ For most practical problems, start with recursive for short horizons (1-5 steps)
 | Ignoring scale changes | Revenue doubles but patterns stay | Model percentage change instead of absolute |
 | Too many lag features | "More history is better" | Use ACF to determine relevant lags |
 | Not differencing | "The model will figure it out" | Tree models handle trends; linear models need stationarity |
+
+```figure
+f3-series-decompose
+```
 
 ## Build It
 

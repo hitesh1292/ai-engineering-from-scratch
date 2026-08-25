@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 05 (NLP Foundations)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Implement BPE, WordPiece, and Unigram tokenization algorithms from scratch and compare their merge strategies
+- Explain how vocabulary size affects model efficiency: too small creates long sequences, too large wastes embedding parameters
+- Analyze tokenization artifacts across languages and code, identifying where specific tokenizers break down
+- Use the tiktoken and sentencepiece libraries to tokenize text and inspect the resulting token IDs
+
 ## The Problem
 
 Your LLM does not read English. It does not read any language. It reads numbers.
@@ -48,6 +55,10 @@ graph TD
 BPE is a greedy compression algorithm repurposed for tokenization. The idea is simple enough to fit on an index card.
 
 Start with individual characters. Count every adjacent pair in the training corpus. Merge the most frequent pair into a new token. Repeat until you reach your target vocabulary size.
+
+```figure
+tokenizer-bpe
+```
 
 Here is BPE running on a tiny corpus with the words "lower", "lowest", and "newest":
 
@@ -148,7 +159,7 @@ SentencePiece supports two algorithms:
 - **BPE mode**: same merge logic as standard BPE, applied to raw character sequences
 - **Unigram mode**: starts with a large vocabulary and iteratively removes tokens that least affect the overall likelihood. The reverse of BPE -- prune instead of merge.
 
-Llama 3 uses SentencePiece with a vocabulary of 128,256 tokens. T5 uses SentencePiece Unigram with 32,000 tokens.
+Llama 2 uses SentencePiece BPE with a vocabulary of 32,000 tokens. T5 uses SentencePiece Unigram with 32,000 tokens. Note: Llama 3 switched to a tiktoken-based byte-level BPE tokenizer with 128,256 tokens.
 
 ### Vocabulary Size Tradeoffs
 
@@ -182,7 +193,7 @@ The trend is clear: vocabulary sizes are growing. GPT-2 used 50,257. GPT-4 uses 
 | GPT-2 | 50,257 | Byte-level BPE | ~1.3 |
 | Llama 2 | 32,000 | SentencePiece BPE | ~1.4 |
 | GPT-4 | ~100,256 | Byte-level BPE | ~1.2 |
-| Llama 3 | 128,256 | SentencePiece BPE | ~1.1 |
+| Llama 3 | 128,256 | Byte-level BPE (tiktoken) | ~1.1 |
 | GPT-4o | 200,019 | Byte-level BPE | ~1.0 |
 
 ### The Multilingual Tax
@@ -190,6 +201,10 @@ The trend is clear: vocabulary sizes are growing. GPT-2 used 50,257. GPT-4 uses 
 Tokenizers trained primarily on English are brutal to other languages. Korean text in GPT-2's tokenizer averages 2-3 tokens per word. Chinese can be worse. This means a Korean user effectively has a context window that is half the size of an English user's -- paying the same price for less information density.
 
 This is why Llama 3 quadrupled its vocabulary from 32K to 128K. More tokens dedicated to non-English scripts means fairer compression across languages.
+
+```figure
+tokenizer-tradeoff
+```
 
 ## Build It
 
@@ -460,5 +475,4 @@ This lesson produces `outputs/prompt-tokenizer-analyzer.md` -- a reusable prompt
 - [Sennrich et al., 2016 -- "Neural Machine Translation of Rare Words with Subword Units"](https://arxiv.org/abs/1508.07909) -- the paper that introduced BPE for NLP, turning a 1994 compression algorithm into the foundation of modern tokenization
 - [Kudo & Richardson, 2018 -- "SentencePiece: A simple and language independent subword tokenizer"](https://arxiv.org/abs/1808.06226) -- language-agnostic tokenization that made multilingual models practical
 - [OpenAI tiktoken repository](https://github.com/openai/tiktoken) -- production BPE implementation in Rust with Python bindings, used by GPT-3.5/4/4o
-- [Andrej Karpathy's minbpe](https://github.com/karpathy/minbpe) -- minimal BPE implementation for education, the cleanest reference for understanding the algorithm
 - [Hugging Face Tokenizers documentation](https://huggingface.co/docs/tokenizers) -- production-grade tokenizer training with Rust performance

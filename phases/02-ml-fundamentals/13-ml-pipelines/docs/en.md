@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 2, Lesson 12 (Hyperparameter Tuning)
 **Time:** ~120 minutes
 
+## Learning Objectives
+
+- Build an ML pipeline from scratch that chains imputation, scaling, encoding, and model training into a single reproducible object
+- Identify data leakage scenarios and explain how pipelines prevent them by fitting transformers only on training data
+- Construct a ColumnTransformer that applies different preprocessing to numeric and categorical features
+- Implement pipeline serialization and demonstrate that the same fitted pipeline produces identical results in training and production
+
 ## The Problem
 
 You have a notebook that loads data, fills missing values with the median, scales features, trains a model, and prints accuracy. It works. You ship it.
@@ -250,6 +257,10 @@ The typical progression:
 | Hardcoded column names | Breaks when schema changes | Use column name lists from config |
 | No data validation | Silently wrong predictions on bad data | Add schema checks before prediction |
 | Training/serving skew | Model sees different features in prod | One Pipeline object for both |
+
+```figure
+f3-pipeline-flow
+```
 
 ## Build It
 

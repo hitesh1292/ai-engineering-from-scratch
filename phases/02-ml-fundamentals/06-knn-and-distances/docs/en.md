@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Implement KNN classification and regression from scratch with configurable K and distance-weighted voting
+- Compare L1, L2, cosine, and Minkowski distance metrics and select the appropriate one for a given data type
+- Explain the curse of dimensionality and demonstrate why KNN degrades in high-dimensional spaces
+- Build a KD-tree for efficient nearest neighbor search and analyze when it outperforms brute-force
+
 ## The Problem
 
 You have a dataset. A new data point arrives. You need to classify it or predict its value. Instead of learning parameters from the data (like linear regression or SVMs), you just find the K training points closest to the new point and let them vote.
@@ -215,6 +222,10 @@ where w_i = 1 / distance_i
 ```
 
 KNN regression produces piecewise-constant (or piecewise-smooth with weighting) predictions. It cannot extrapolate beyond the range of the training data. If the training targets are all between 0 and 100, KNN will never predict 200.
+
+```figure
+knn-smoothness
+```
 
 ## Build It
 

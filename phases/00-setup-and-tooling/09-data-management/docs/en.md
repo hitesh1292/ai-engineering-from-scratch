@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 0, Lesson 01
 **Time:** ~45 minutes
 
+## Learning Objectives
+
+- Load, stream, and cache datasets using the Hugging Face `datasets` library
+- Convert between CSV, JSON, Parquet, and Arrow formats and explain their tradeoffs
+- Create reproducible train/validation/test splits with fixed random seeds
+- Manage large model and dataset files using `.gitignore`, Git LFS, or DVC
+
 ## The Problem
 
 Every AI project starts with data. You need to find datasets, download them, convert between formats, split them for training and evaluation, and version them so experiments are reproducible. Doing this manually every time is slow and error-prone. You need a repeatable workflow.
@@ -25,6 +32,10 @@ graph TD
 
 The Hugging Face `datasets` library is the standard way to load data for AI work. It handles downloading, caching, format conversion, and streaming out of the box.
 
+```figure
+s0-data-pipeline
+```
+
 ## Build It
 
 ### Step 1: Install the datasets library
@@ -38,7 +49,7 @@ pip install datasets huggingface_hub
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("imdb")
+dataset = load_dataset("stanfordnlp/imdb")
 print(dataset)
 print(dataset["train"][0])
 ```
@@ -50,7 +61,7 @@ This downloads the IMDB movie review dataset. After the first download, it loads
 Some datasets are too large to fit on disk. Streaming loads them row by row without downloading the full thing.
 
 ```python
-dataset = load_dataset("wikipedia", "20220301.en", split="train", streaming=True)
+dataset = load_dataset("wikimedia/wikipedia", "20220301.en", split="train", streaming=True)
 
 for i, example in enumerate(dataset):
     print(example["title"])
@@ -65,7 +76,7 @@ Streaming gives you an `IterableDataset`. You process rows as they arrive. Memor
 The `datasets` library uses Apache Arrow under the hood. You can convert to other formats depending on what your pipeline needs.
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb", split="train")
 
 dataset.to_csv("imdb_train.csv")
 dataset.to_json("imdb_train.json")
@@ -94,7 +105,7 @@ Every ML project needs three splits:
 Some datasets come pre-split. When they don't, split them yourself:
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb", split="train")
 
 split = dataset.train_test_split(test_size=0.2, seed=42)
 train_val = split["train"].train_test_split(test_size=0.125, seed=42)

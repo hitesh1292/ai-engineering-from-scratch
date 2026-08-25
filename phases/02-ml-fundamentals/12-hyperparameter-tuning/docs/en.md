@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 2, Lesson 11 (Ensemble Methods)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Implement grid search, random search, and Bayesian optimization from scratch and compare their sample efficiency
+- Explain why random search outperforms grid search when most hyperparameters have low effective dimensionality
+- Build a Bayesian optimization loop using a surrogate model and acquisition function to guide the search
+- Design a hyperparameter tuning strategy that avoids overfitting the validation set through proper cross-validation
+
 ## The Problem
 
 Your gradient boosting model has a learning rate, number of trees, max depth, min samples per leaf, subsample ratio, and column sample ratio. That is six hyperparameters. If each has 5 reasonable values, the grid has 5^6 = 15,625 combinations. Training each takes 10 seconds. That is 43 hours of compute to try them all.
@@ -237,6 +244,10 @@ This is expensive (5 outer folds x 5 inner folds x 27 grid points = 675 model fi
 | XGBoost | learning_rate, max_depth, subsample, colsample | Bayesian, 100-200 trials + early stopping | Medium |
 
 **When in doubt:** random search with 2x the number of hyperparameters as trials (e.g., 6 hyperparameters = 12+ trials minimum). You will be surprised how often random search with 50 trials beats carefully designed grid search.
+
+```figure
+k-fold-cv
+```
 
 ## Build It
 

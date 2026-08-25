@@ -3,9 +3,16 @@
 > Containers make "works on my machine" a thing of the past.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Docker
 **Prerequisites:** Phase 0, Lessons 01 and 03
 **Time:** ~60 minutes
+
+## Learning Objectives
+
+- Build a GPU-enabled Docker image with CUDA, PyTorch, and AI libraries from a Dockerfile
+- Mount host directories as volumes to persist models, datasets, and code across container rebuilds
+- Configure the NVIDIA Container Toolkit to expose GPUs inside containers
+- Orchestrate multi-service AI applications (inference server + vector database) using Docker Compose
 
 ## The Problem
 
@@ -64,6 +71,10 @@ Training Container
 Inference Container
   Optimized for serving. Small image. Fast cold start.
   Runs behind a load balancer in production.
+```
+
+```figure
+s0-image-layers
 ```
 
 ## Build It
@@ -128,7 +139,7 @@ nvidia/cuda:12.4.1-runtime-ubuntu22.04
   Use for: running pre-built code
   Size: ~1.5 GB
 
-pytorch/pytorch:2.3.1-cuda12.4-cudnn9-runtime
+pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
   PyTorch pre-installed on top of CUDA.
   Use for: skipping the PyTorch install step
   Size: ~6 GB
@@ -150,23 +161,31 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.12 \
-    python3.12-venv \
-    python3.12-dev \
-    python3-pip \
+    software-properties-common \
     git \
     curl \
     build-essential \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1
 
+RUN curl -sSL https://raw.githubusercontent.com/pypa/get-pip/3b73145063be545b649ad9ca83ea8da5fc915a4f/public/get-pip.py -o /tmp/get-pip.py \
+    && echo "a341e1a43e38001c551a1508a73ff23636a11970b61d901d9a1cad2a18f57055  /tmp/get-pip.py" | sha256sum -c - \
+    && python /tmp/get-pip.py \
+    && rm /tmp/get-pip.py \
+    && update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip3.12 1
+
 RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 RUN python -m pip install --no-cache-dir \
-    torch==2.3.1 \
-    torchvision==0.18.1 \
-    torchaudio==2.3.1 \
+    torch==2.6.0+cu124 \
+    torchvision==0.21.0+cu124 \
+    torchaudio==2.6.0+cu124 \
     --index-url https://download.pytorch.org/whl/cu124
 
 RUN python -m pip install --no-cache-dir \

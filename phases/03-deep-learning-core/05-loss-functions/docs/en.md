@@ -7,6 +7,13 @@
 **Prerequisites:** Lesson 03.04 (Activation Functions)
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Implement MSE, binary cross-entropy, categorical cross-entropy, and contrastive loss (InfoNCE) from scratch with their gradients
+- Explain why MSE fails for classification by demonstrating the "predict 0.5 for everything" failure mode
+- Apply label smoothing to cross-entropy and describe how it prevents overconfident predictions
+- Choose the correct loss function for regression, binary classification, multi-class classification, and embedding learning tasks
+
 ## The Problem
 
 A model minimizing MSE on a classification problem will confidently predict 0.5 for everything. It's minimizing loss. It's also useless.
@@ -178,6 +185,10 @@ graph LR
     MSE_S -->|"Best for"| Reg2["Regression"]
     CE_S -->|"Best for"| Cls2["Classification"]
     CL_S -->|"Best for"| Emb2["Representation learning"]
+```
+
+```figure
+cross-entropy-loss
 ```
 
 ## Build It

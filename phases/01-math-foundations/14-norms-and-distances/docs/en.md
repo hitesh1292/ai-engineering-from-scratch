@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Implement L1, L2, cosine, Mahalanobis, Jaccard, and edit distance functions from scratch
+- Select the appropriate distance metric for a given ML task and explain why alternatives fail
+- Connect L1 and L2 norms to LASSO and Ridge regularization and their geometric constraint regions
+- Demonstrate how the same dataset produces different nearest neighbors under different metrics
+
 ## The Problem
 
 You have two vectors. Maybe they are word embeddings. Maybe they are user profiles. Maybe they are pixel arrays. You need to know: how close are they?
@@ -415,6 +422,10 @@ Product quant.    Compress vectors, search       FAISS (memory-constrained)
 ```
 
 HNSW (Hierarchical Navigable Small World) is the dominant algorithm in modern vector databases. It builds a multi-layer graph where each node connects to its approximate nearest neighbors. Search starts at the top layer (sparse, long jumps) and descends to the bottom layer (dense, short jumps).
+
+```figure
+norm-unit-balls
+```
 
 ## Build It
 

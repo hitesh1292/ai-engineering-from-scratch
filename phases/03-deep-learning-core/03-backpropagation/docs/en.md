@@ -7,6 +7,13 @@
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
+## Learning Objectives
+
+- Implement a Value-based autograd engine that builds a computational graph and computes gradients via topological sort
+- Derive the backward pass for addition, multiplication, and sigmoid using the chain rule
+- Train a multi-layer network on XOR and circle classification using only your from-scratch backpropagation engine
+- Identify the vanishing gradient problem in deep sigmoid networks and explain why gradients shrink exponentially
+
 ## The Problem
 
 Your network has a single hidden layer with 768 inputs and 3072 outputs. That's 2,359,296 weights. It made a wrong prediction. Which weights caused the error? Testing each weight individually means 2.3 million forward passes. Backpropagation computes all 2.3 million gradients in a single backward pass. That's not an optimization. That's the difference between trainable and impossible.
@@ -124,6 +131,10 @@ dL/db1 = dL/dz1
 ```
 
 Every gradient is a product of local derivatives traced back from the loss. That's all backpropagation is.
+
+```figure
+backprop-vanishing
+```
 
 ## Build It
 
@@ -456,6 +467,4 @@ This lesson produces:
 ## Further Reading
 
 - Rumelhart, Hinton & Williams, "Learning representations by back-propagating errors" (1986) -- the paper that made backpropagation mainstream and unlocked multi-layer network training
-- Andrej Karpathy's micrograd (https://github.com/karpathy/micrograd) -- a tiny autograd engine in ~100 lines of Python, the direct inspiration for the Value class in this lesson
-- Andrej Karpathy, "Yes you should understand backprop" (https://karpathy.medium.com/yes-you-should-understand-backprop-e034e8d3c23) -- why relying on autograd without understanding the math leads to real debugging pain
 - 3Blue1Brown, "Neural Networks" series (https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) -- the best visual explanation of backpropagation and gradient flow through networks

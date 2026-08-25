@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Build a multi-layer network from scratch with Layer and Network classes that perform a complete forward pass
+- Trace matrix dimensions through each layer of a network and identify shape mismatches
+- Explain how stacking nonlinear activations enables a network to learn curved decision boundaries
+- Solve the XOR problem using a 2-2-1 architecture with hand-tuned sigmoid weights
+
 ## The Problem
 
 A single neuron is a line drawer. That's it. One straight line through your data. Every real problem in AI -- image recognition, language understanding, playing Go -- requires curves. Stacking neurons into layers is how you get curves.
@@ -138,6 +145,10 @@ graph LR
 ### Composability
 
 Neural networks are composable. You can stack them, chain them, run them in parallel. A Whisper model uses an encoder network to process audio and a separate decoder network to generate text. Modern LLMs are decoder-only. BERT is encoder-only. T5 is encoder-decoder. The architecture choice defines what the model can do.
+
+```figure
+mlp-forward
+```
 
 ## Build It
 

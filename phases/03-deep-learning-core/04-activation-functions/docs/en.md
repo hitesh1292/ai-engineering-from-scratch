@@ -7,6 +7,13 @@
 **Prerequisites:** Lesson 03.03 (Backpropagation)
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Implement sigmoid, tanh, ReLU, Leaky ReLU, GELU, Swish, and softmax with their derivatives from scratch
+- Diagnose the vanishing gradient problem by measuring activation magnitudes through 10+ layers with different activations
+- Detect dead neurons in a ReLU network and explain why GELU avoids this failure mode
+- Select the correct activation function for a given architecture (transformer, CNN, RNN, output layer)
+
 ## The Problem
 
 Stack two linear transformations: y = W2(W1x + b1) + b2. Expand it: y = W2W1x + W2b1 + b2. That's just y = Ax + c -- a single linear transformation. No matter how many linear layers you stack, the result collapses to one matrix multiply. Your 100-layer network has the same representational power as a single layer.
@@ -91,7 +98,7 @@ Maximum derivative is 1.0 at x = 0 -- four times better than sigmoid. But the va
 
 ### ReLU: The Breakthrough
 
-Rectified Linear Unit. Published by Nair and Hinton in 2010, it changed everything.
+Rectified Linear Unit. Popularized for deep learning by Nair and Hinton in 2010 (the function itself dates to Fukushima's 1969 work), it changed everything.
 
 ```
 relu(x) = max(0, x)
@@ -143,7 +150,7 @@ Self-gated activation discovered by Ramachandran et al. in 2017 through automate
 swish(x) = x * sigmoid(x)
 ```
 
-Swish got its name from its resemblance to the Nike logo. Formally it's x * sigmoid(x). Google discovered it through automated search over activation function space -- a neural network designing parts of neural networks.
+Swish is formally x * sigmoid(x). Google discovered it through automated search over activation function space -- a neural network designing parts of neural networks.
 
 Like GELU, it is smooth, non-monotonic, and allows small negative values. The difference is subtle: Swish uses sigmoid for gating while GELU uses the Gaussian CDF. In practice, performance is nearly identical. Swish is used in EfficientNet and some vision models. GELU dominates in language models.
 
@@ -207,6 +214,10 @@ flowchart TD
     Task -->|"Binary classification"| Sigmoid["Use Sigmoid"]
     Task -->|"Multi-class classification"| Softmax["Use Softmax"]
     Task -->|"Regression"| Linear["Use Linear (no activation)"]
+```
+
+```figure
+softmax-temperature
 ```
 
 ## Build It

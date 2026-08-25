@@ -7,6 +7,13 @@
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 
+## Learning Objectives
+
+- Build a complete deep learning framework (~500 lines) with Module, Linear, ReLU, Sigmoid, Dropout, BatchNorm, Sequential, loss functions, optimizers, and DataLoader
+- Explain the Module abstraction (forward, backward, parameters) and why train/eval mode toggling is necessary
+- Wire all components into a working training loop that trains a 4-layer network on circle classification
+- Map each component of your framework to its PyTorch equivalent (nn.Module, nn.Sequential, optim.Adam, DataLoader)
+
 ## The Problem
 
 You have ten lessons of building blocks scattered across separate files. A `Value` class here, a training loop there, weight initialization in another file, learning rate schedules in yet another. To train a network, you copy-paste from five different lessons and wire them together by hand.
@@ -138,6 +145,10 @@ classDiagram
     Module <|-- ReLU
     Module <|-- Sequential
     Sequential *-- Module
+```
+
+```figure
+gradient-clipping
 ```
 
 ## Build It
@@ -695,7 +706,6 @@ This lesson produces:
 
 ## Further Reading
 
-- Karpathy, "micrograd" (https://github.com/karpathy/micrograd) -- the original ~150-line autograd engine that inspired this lesson's approach
 - Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019) -- the paper describing PyTorch's design decisions
 - Chollet, "Deep Learning with Python, Second Edition" (2021) -- Chapter 3 covers Keras internals with the same module/layer abstraction
 - Johnson, "Tiny-DNN" (https://github.com/tiny-dnn/tiny-dnn) -- a header-only C++ deep learning framework for understanding framework internals

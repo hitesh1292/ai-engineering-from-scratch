@@ -7,13 +7,20 @@
 **Prerequisites:** Phase 10, Lessons 01-03 (Tokenizers, Building a Tokenizer, Data Pipelines)
 **Time:** ~120 minutes
 
+## Learning Objectives
+
+- Implement the full GPT-2 architecture (124M parameters) from scratch: token embeddings, positional embeddings, transformer blocks, and the language model head
+- Train a GPT model on a text corpus using next-token prediction with cross-entropy loss
+- Implement autoregressive text generation with temperature sampling and top-k/top-p filtering
+- Monitor training loss curves and validate that the model learns coherent language patterns
+
 ## The Problem
 
 You know what a transformer is. You have read the diagrams. You can recite "attention is all you need" and draw boxes labeled "Multi-Head Attention" on a whiteboard.
 
 None of that means you understand what happens when a model generates text.
 
-There are 124,439,808 parameters in GPT-2 Small. Every single one of them was set by running a training loop: forward pass, compute loss, backward pass, update weights. Twelve transformer blocks. Twelve attention heads per block. A 768-dimensional embedding space. A vocabulary of 50,257 tokens. Every time the model generates a token, all 124 million parameters participate in a single matrix multiplication chain that takes a sequence of token IDs and produces a probability distribution over the next token.
+There are 124,438,272 parameters in GPT-2 Small (with weight tying). Every single one of them was set by running a training loop: forward pass, compute loss, backward pass, update weights. Twelve transformer blocks. Twelve attention heads per block. A 768-dimensional embedding space. A vocabulary of 50,257 tokens. Every time the model generates a token, all 124 million parameters participate in a single matrix multiplication chain that takes a sequence of token IDs and produces a probability distribution over the next token.
 
 If you have never built this yourself, you are working with a black box. You can use the API. You can fine-tune. But when something goes wrong -- when the model hallucinates, when it repeats itself, when it refuses to follow instructions -- you have no mental model for *why*.
 
@@ -457,6 +464,10 @@ Temperature controls randomness. Temperature 1.0 uses the raw distribution. Temp
 
 The `tokens[-seq_len:]` window is necessary because the model has a maximum context length (1024 for GPT-2). Once you exceed it, you must drop the oldest tokens. This is the "context window" that everyone talks about.
 
+```figure
+sampling-decoder
+```
+
 ## Use It
 
 ### Full Training and Generation Demo
@@ -520,6 +531,5 @@ This lesson produces `outputs/prompt-gpt-architecture-analyzer.md` -- a prompt t
 
 - [Radford et al., 2019 -- "Language Models are Unsupervised Multitask Learners" (GPT-2)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) -- the GPT-2 paper that introduced the 124M to 1.5B parameter family
 - [Vaswani et al., 2017 -- "Attention Is All You Need"](https://arxiv.org/abs/1706.03762) -- the original transformer paper with scaled dot-product attention and multi-head attention
-- [Andrej Karpathy's nanoGPT](https://github.com/karpathy/nanoGPT) -- the cleanest GPT-2 training implementation (~300 lines of PyTorch), the best educational reference for this architecture
 - [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- how Meta scaled the GPT architecture to 405B parameters with 16K GPUs
 - [Pope et al., 2022 -- "Efficiently Scaling Transformer Inference"](https://arxiv.org/abs/2211.05102) -- the paper that formalized prefill vs decode and KV cache analysis

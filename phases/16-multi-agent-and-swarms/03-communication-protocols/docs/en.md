@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 14 (Agent Engineering), Lesson 16.01 (Why Multi-Agent)
 **Time:** ~120 minutes
 
+## Learning Objectives
+
+- Implement MCP tool discovery and invocation so agents can use tools exposed by external servers
+- Build an A2A agent card and task endpoint that allows one agent to delegate work to another over HTTP
+- Compare MCP (tool access), A2A (agent-to-agent), ACP (enterprise audit), and ANP (decentralized trust) and explain which protocol solves which problem
+- Wire multiple protocols together in a single system where agents discover tools via MCP and delegate tasks via A2A
+
 ## The Problem
 
 You split your system into multiple agents. A researcher, a coder, a reviewer. They're great at their individual jobs. But now you need them to actually talk to each other.
@@ -31,16 +38,11 @@ This lesson goes deep. You will read real wire formats from each spec, build wor
 Think of these four protocols as layers, each addressing a different question:
 
 ```mermaid
-block-beta
-  columns 1
-  block:ANP["ANP — How do agents trust strangers?\nDecentralized identity (DID), E2EE, meta-protocol"]
-  end
-  block:A2A["A2A — How do agents collaborate on goals?\nAgent Cards, task lifecycle, streaming, negotiation"]
-  end
-  block:ACP["ACP — How do agents talk in auditable systems?\nRuns, trajectory metadata, session continuity"]
-  end
-  block:MCP["MCP — How does an agent use a tool?\nTool discovery, execution, context sharing"]
-  end
+flowchart TD
+  ANP["ANP — How do agents trust strangers?<br/>Decentralized identity (DID), E2EE, meta-protocol"]
+  A2A["A2A — How do agents collaborate on goals?<br/>Agent Cards, task lifecycle, streaming, negotiation"]
+  ACP["ACP — How do agents talk in auditable systems?<br/>Runs, trajectory metadata, session continuity"]
+  MCP["MCP — How does an agent use a tool?<br/>Tool discovery, execution, context sharing"]
 
   style ANP fill:#f3e8ff,stroke:#7c3aed
   style A2A fill:#dbeafe,stroke:#2563eb
@@ -184,7 +186,11 @@ stateDiagram-v2
     canceled --> [*]
     rejected --> [*]
 
-    note right of completed: Terminal states are immutable.\nFollow-ups create new tasks\nwithin the same contextId.
+    note right of completed
+        Terminal states are immutable.
+        Follow-ups create new tasks
+        within the same contextId.
+    end note
 ```
 
 All 8 states (the spec also defines `UNSPECIFIED` as a sentinel, omitted here):
@@ -592,6 +598,10 @@ graph TB
 - **A2A** handles collaboration between agents (internal and external)
 - **ACP** wraps responses in trajectory metadata for auditability
 - **ANP** provides identity verification for agents you don't control
+
+```figure
+swarm-message-bus
+```
 
 ## Build It
 

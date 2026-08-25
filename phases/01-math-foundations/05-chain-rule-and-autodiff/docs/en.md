@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lesson 04 (Derivatives & Gradients)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Build a minimal autograd engine (Value class) that records operations and computes gradients via reverse-mode autodiff
+- Implement forward and backward passes through a computation graph using topological sort
+- Construct and train a multi-layer perceptron on XOR using only the from-scratch autograd engine
+- Verify autodiff correctness using gradient checking against numerical finite differences
+
 ## The Problem
 
 You can compute derivatives of simple functions. But a neural network is not a simple function. It is hundreds of functions composed together: matrix multiply, add bias, apply activation, matrix multiply again, softmax, cross-entropy loss. The output is a function of a function of a function.
@@ -155,6 +162,10 @@ PyTorch internally:
 5. Gradients accumulate in `.grad` attributes via addition (not replacement)
 
 The graph is dynamic (define-by-run). A new graph is built on every forward pass. This is why PyTorch supports control flow (if/else, loops) inside models.
+
+```figure
+chain-rule
+```
 
 ## Build It
 
@@ -505,7 +516,6 @@ The Value class built here is the foundation for the neural network training loo
 
 ## Further Reading
 
-- [Karpathy: micrograd](https://github.com/karpathy/micrograd) -- the autograd engine this lesson is modeled after, in 100 lines
 - [3Blue1Brown: Backpropagation calculus](https://www.youtube.com/watch?v=tIeHLnjs5U8) -- visual explanation of the chain rule in neural networks
 - [PyTorch Autograd mechanics](https://pytorch.org/docs/stable/notes/autograd.html) -- how the real system works
 - [Baydin et al., Automatic Differentiation in Machine Learning: a Survey](https://arxiv.org/abs/1502.05767) -- comprehensive reference

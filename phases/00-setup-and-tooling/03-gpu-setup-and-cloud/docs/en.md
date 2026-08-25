@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 0, Lesson 01
 **Time:** ~45 minutes
 
+## Learning Objectives
+
+- Verify local GPU availability using `nvidia-smi` and PyTorch's CUDA API
+- Configure Google Colab with a T4 GPU for free cloud-based experiments
+- Benchmark matrix multiplication on CPU vs GPU and measure the speedup
+- Estimate the largest model that fits in your VRAM using the fp16 rule of thumb
+
 ## The Problem
 
 Most lessons in phases 1-3 run fine on CPU. But once you start training CNNs, transformers, or LLMs (phases 4+), you need GPU acceleration. A training run that takes 8 hours on CPU takes 10 minutes on GPU.
@@ -34,6 +41,10 @@ Your options:
    Best for: Serious training, large models
 ```
 
+```figure
+s0-gpu-dispatch
+```
+
 ## Build It
 
 ### Option 1: Local NVIDIA GPU
@@ -53,7 +64,7 @@ print(f"CUDA available: {torch.cuda.is_available()}")
 print(f"CUDA version: {torch.version.cuda}")
 if torch.cuda.is_available():
     print(f"GPU: {torch.cuda.get_device_name(0)}")
-    print(f"Memory: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+    print(f"Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
 ```
 
 ### Option 2: Google Colab

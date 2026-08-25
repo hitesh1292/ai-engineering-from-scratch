@@ -7,6 +7,13 @@
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Implement SGD, SGD with momentum, Adam, and AdamW optimizers from scratch in Python
+- Explain how Adam's bias correction compensates for zero-initialized moment estimates in early training steps
+- Demonstrate why AdamW produces better generalization than Adam with L2 regularization on the same task
+- Select the appropriate optimizer and default hyperparameters for transformers, CNNs, GANs, and fine-tuning
+
 ## The Problem
 
 You computed the gradients. You know that weight #4,721 should decrease by 0.003 to reduce the loss. But 0.003 in what units? Scaled by what? And should you move the same amount on step 1 as on step 1,000?
@@ -40,11 +47,11 @@ Learning rate is the only knob. Too high: the loss diverges. Too low: training t
 The ball-rolling-downhill analogy is overused but accurate. Instead of stepping by the gradient alone, you maintain a velocity that accumulates past gradients.
 
 ```
-v_t = beta * v_{t-1} + gradient
-w = w - lr * v_t
+m_t = beta * m_{t-1} + gradient
+w = w - lr * m_t
 ```
 
-Beta (typically 0.9) controls how much history to keep. With beta = 0.9, the velocity is roughly the average of the last 10 gradients (1 / (1 - 0.9) = 10).
+Beta (typically 0.9) controls how much history to keep. With beta = 0.9, the momentum is roughly the average of the last 10 gradients (1 / (1 - 0.9) = 10).
 
 Why this fixes oscillation: gradients that point in the same direction accumulate. Gradients that flip direction cancel out. In that narrow valley, the "across" component flips sign each step and gets dampened. The "along" component stays consistent and gets amplified. The result is smooth acceleration in the useful direction.
 
@@ -155,6 +162,10 @@ flowchart TD
     Type -->|"GAN"| Adam2["Adam<br/>lr=2e-4, beta1=0.5"]
     Type -->|"Fine-tuning"| AdamW2["AdamW<br/>lr=2e-5, wd=0.01"]
     Type -->|"Don't know yet"| Default["Start with AdamW<br/>lr=3e-4, wd=0.01"]
+```
+
+```figure
+optimizer-trajectory
 ```
 
 ## Build It

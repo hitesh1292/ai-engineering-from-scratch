@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 0
 **Time:** ~60 minutes
 
+## Learning Objectives
+
+- Implement vector and matrix operations (addition, dot product, matrix multiply) from scratch in Python
+- Explain geometrically what the dot product, projection, and Gram-Schmidt process do
+- Determine linear independence, rank, and basis of a set of vectors using row reduction
+- Connect linear algebra concepts to their AI applications: embeddings, attention scores, and LoRA
+
 ## The Problem
 
 Open any ML paper. Within the first page, you'll see vectors, matrices, dot products, and transformations. Without linear algebra intuition, these are just symbols. With it, you can see what a neural network is actually doing -- moving points around in space.
@@ -170,6 +177,10 @@ This is how QR decomposition works internally. Q is the orthonormal basis, R cap
 - Solving linear systems (more stable than Gaussian elimination)
 - Computing eigenvalues (QR algorithm)
 - Least-squares regression (the standard numerical method)
+
+```figure
+eigen-directions
+```
 
 ## Build It
 

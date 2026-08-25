@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 1, Lessons 04-05 (Derivatives, Gradients)
 **Time:** ~75 minutes
 
+## Learning Objectives
+
+- Implement vanilla gradient descent, SGD with momentum, and Adam from scratch
+- Compare optimizer convergence on the Rosenbrock function and explain why Adam adapts per-weight learning rates
+- Distinguish convex from non-convex loss landscapes and explain the role of saddle points in high dimensions
+- Configure learning rate schedules (step decay, cosine annealing, warmup) for training stability
+
 ## The Problem
 
 You have a loss function. It tells you how wrong your model is. You have gradients. They tell you which direction makes the loss worse. Now you need a strategy for walking downhill.
@@ -187,6 +194,10 @@ graph TD
 ```
 
 Sharp minima generalize poorly. Flat minima generalize well. This is one reason SGD with momentum often outperforms Adam on final test accuracy: its noise prevents settling into sharp minima.
+
+```figure
+gradient-descent
+```
 
 ## Build It
 

@@ -7,6 +7,13 @@
 **Prerequisites:** Phase 10, Lesson 01 (Tokenizers: BPE, WordPiece, SentencePiece)
 **Time:** ~90 minutes
 
+## Learning Objectives
+
+- Build a production-grade BPE tokenizer that handles Unicode, whitespace normalization, and special tokens
+- Implement byte-level fallback so the tokenizer can encode any input (including emoji, CJK, and code) without unknown tokens
+- Add pre-tokenization regex patterns that split text at word boundaries before applying BPE merges
+- Train a custom tokenizer on a corpus and evaluate its compression ratio against tiktoken on multilingual text
+
 ## The Problem
 
 Your BPE tokenizer from Lesson 01 works on English text. Now throw Japanese at it. Or emoji. Or Python code with mixed tabs and spaces.
@@ -140,6 +147,10 @@ tiktoken (OpenAI) is written in Rust with Python bindings. HuggingFace tokenizer
 For perspective: tokenizing 15 trillion tokens for Llama 3 pre-training at 1 million tokens per second (fast Python) would take 174 days. At 100 million tokens per second (Rust), it takes 1.7 days.
 
 You are building in Python to understand the algorithm. In production, you would use a compiled implementation and only touch the Python wrapper.
+
+```figure
+weight-tying
+```
 
 ## Build It
 
@@ -432,6 +443,5 @@ This lesson produces a prompt for building and debugging production tokenizers. 
 - [OpenAI tiktoken source](https://github.com/openai/tiktoken) -- Rust BPE implementation used by GPT-3.5/4
 - [HuggingFace tokenizers](https://github.com/huggingface/tokenizers) -- Rust tokenizer library supporting BPE, WordPiece, Unigram
 - [Llama 3 paper (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- details on 128K vocabulary and tokenizer training
-- [Karpathy minbpe](https://github.com/karpathy/minbpe) -- minimal byte-level BPE for education
 - [SentencePiece (Kudo & Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- language-agnostic tokenization
 - [GPT-2 tokenizer source](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- the original byte-to-Unicode mapping
